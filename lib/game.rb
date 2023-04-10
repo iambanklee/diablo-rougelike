@@ -37,7 +37,7 @@ class Game
 
       case move_direction
       when '0'
-        @map.go_up
+        @map.go_north
       when '1'
         @map.go_left
       when '2'

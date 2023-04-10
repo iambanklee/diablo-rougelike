@@ -28,4 +28,16 @@ RSpec.describe Map do
       expect(map.map[0][0]).to eq(map.current_room)
     end
   end
+
+  describe '#go_north' do
+    subject(:go_north) { map.go_north }
+    let(:map) { described_class.new(rows: 3, cols: 3) }
+
+    it 'go north' do
+      subject
+
+      expect(map.current_room).to eq(map.map[0][1])
+    end
+  end
+
 end

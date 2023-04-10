@@ -14,7 +14,7 @@ RSpec.describe 'Game' do
   describe '#start' do
     subject(:game_start) { game.start }
     let(:game) { Game.new }
-    let(:map) { Map.new(rows: 3,cols: 3) }
+    let(:map) { Map.new(rows: 3, cols: 3) }
     let(:room) { instance_double('Room', name: 'Room A', enter: true) }
 
     context 'when map is cleared' do
