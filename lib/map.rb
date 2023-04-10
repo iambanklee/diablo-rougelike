@@ -7,7 +7,18 @@ class Map
     @map = Array.new(rows) { Array.new(cols) }
   end
 
-  def enter(x, y)
-    @map[x][y] = true # TODO: replace with Room.new
+  def start
+  end
+  def cleared?
+    @cleared
+  end
+
+  def go_up
+  end
+  def go_left
+  end
+  def go_down
+  end
+  def go_right
   end
 end
