@@ -20,9 +20,6 @@ RSpec.describe 'Game' do
     context 'when map is cleared' do
       before do
         allow(Map).to receive(:new).and_return(map)
-        allow(map).to receive(:start).and_return(room)
-        allow(room).to receive(:enter)
-        allow(map).to receive(:current_room).and_return(room)
         allow(map).to receive(:cleared?).and_return(false, true)
 
         allow(Kernel).to receive(:gets).and_return('Bank', 'Mage', '1')

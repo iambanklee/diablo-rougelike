@@ -25,10 +25,10 @@ class Game
       room.enter
 
       begin
-        puts "[0] Go up"
-        puts "[1] Go left"
-        puts "[2] Go down"
-        puts "[3] Go right"
+        puts "[0] Go North"
+        puts "[1] Go West"
+        puts "[2] Go South"
+        puts "[3] Go East"
         puts "where do you go?"
         move_direction = Kernel.gets.chomp
       end until move_direction.match(/[0-9]/)
@@ -37,13 +37,13 @@ class Game
 
       case move_direction
       when '0'
-        @map.go_north
+        @map.go_direction(direction: Map::NORTH)
       when '1'
-        @map.go_left
+        @map.go_direction(direction: Map::WEST)
       when '2'
-        @map.go_down
+        @map.go_direction(direction: Map::SOUTH)
       when '3'
-        @map.go_right
+        @map.go_direction(direction: Map::EAST)
       end
 
       room = @map.current_room
