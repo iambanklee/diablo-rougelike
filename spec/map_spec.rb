@@ -13,8 +13,11 @@ RSpec.describe Map do
     let(:y) { 3 }
 
     it 'generates map by given size' do
-      expect(new_map.rooms[x - 1][y - 1]).to be_nil
       expect { new_map.rooms[x][y] }.to raise_error(NoMethodError)
+    end
+
+    it 'set final room' do
+      expect(new_map.final_room).to eq(new_map.rooms[x - 1][y - 1])
     end
   end
 
@@ -22,7 +25,7 @@ RSpec.describe Map do
     subject(:enter) { map.start }
     let(:map) { described_class.new(rows: 3, cols: 3) }
 
-    it 'go to first room' do
+    it 'goes to first room' do
       subject
 
       expect(map.rooms[0][0]).to eq(map.current_room)

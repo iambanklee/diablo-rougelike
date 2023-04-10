@@ -24,25 +24,31 @@ class Game
     until map.cleared?
       room.enter
 
+      if room == @map.final_room
+        # TODO: final boss
+        map.cleared = true
+        next
+      end
+
       begin
-        puts "[0] Go North"
-        puts "[1] Go West"
-        puts "[2] Go South"
-        puts "[3] Go East"
+        puts "[W] Go North"
+        puts "[A] Go West"
+        puts "[S] Go South"
+        puts "[D] Go East"
         puts "where do you go?"
         move_direction = Kernel.gets.chomp
-      end until move_direction.match(/[0-9]/)
+      end until move_direction.match(/[WASD]/)
 
       puts "you are going #{move_direction}"
 
       case move_direction
-      when '0'
+      when 'W'
         @map.go_direction(direction: Map::NORTH)
-      when '1'
+      when 'A'
         @map.go_direction(direction: Map::WEST)
-      when '2'
+      when 'S'
         @map.go_direction(direction: Map::SOUTH)
-      when '3'
+      when 'D'
         @map.go_direction(direction: Map::EAST)
       end
 

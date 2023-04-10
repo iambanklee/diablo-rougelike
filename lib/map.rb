@@ -8,7 +8,9 @@ class Map
   DIRECTIONS = [NORTH, WEST, EAST, SOUTH].freeze
 
   attr_reader :rooms, :rows, :cols,
-              :current_room, :current_x, :current_y
+              :current_room, :current_x, :current_y, :final_room
+
+  attr_accessor :cleared
 
   # TODO: Extract
   Room = Struct.new(:name) do
@@ -23,8 +25,10 @@ class Map
     @cols = cols
     @current_x = 0
     @current_y = 0
+    @cleared = false
 
     set_entry_point
+    set_final_point
   end
 
   def start
@@ -53,6 +57,11 @@ class Map
   def set_entry_point
     @rooms[current_x][current_y] = Room.new("#{current_x}-#{current_y}")
     set_current_room
+  end
+
+  def set_final_point
+    @rooms[rows - 1][cols - 1] ||= Room.new("#{rows - 1}-#{cols - 1}")
+    @final_room = @rooms[rows - 1][cols - 1]
   end
 
   def set_current_room
