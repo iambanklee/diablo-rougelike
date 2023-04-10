@@ -13,8 +13,8 @@ RSpec.describe Map do
     let(:y) { 3 }
 
     it 'generates map by given size' do
-      expect(new_map.map[x - 1][y - 1]).to be_nil
-      expect { new_map.map[x][y] }.to raise_error(NoMethodError)
+      expect(new_map.rooms[x - 1][y - 1]).to be_nil
+      expect { new_map.rooms[x][y] }.to raise_error(NoMethodError)
     end
   end
 
@@ -25,7 +25,7 @@ RSpec.describe Map do
     it 'go to first room' do
       subject
 
-      expect(map.map[0][0]).to eq(map.current_room)
+      expect(map.rooms[0][0]).to eq(map.current_room)
     end
   end
 
@@ -36,7 +36,7 @@ RSpec.describe Map do
     it 'go north' do
       subject
 
-      expect(map.current_room).to eq(map.map[0][1])
+      expect(map.current_room).to eq(map.rooms[0][1])
     end
   end
 
@@ -50,7 +50,7 @@ RSpec.describe Map do
       it 'goes North' do
         subject
 
-        expect(map.current_room).to eq(map.map[0][1])
+        expect(map.current_room).to eq(map.rooms[0][1])
       end
     end
 
@@ -61,7 +61,7 @@ RSpec.describe Map do
         it 'stays at current room' do
           subject
 
-          expect(map.current_room).to eq(map.map[0][0])
+          expect(map.current_room).to eq(map.rooms[0][0])
         end
       end
     end
@@ -75,14 +75,14 @@ RSpec.describe Map do
 
         subject
 
-        expect(map.current_room).to eq(map.map[0][1])
+        expect(map.current_room).to eq(map.rooms[0][1])
       end
 
       context 'when no room at West' do
         it 'stays at current room' do
           subject
 
-          expect(map.current_room).to eq(map.map[0][0])
+          expect(map.current_room).to eq(map.rooms[0][0])
         end
       end
     end
@@ -93,7 +93,7 @@ RSpec.describe Map do
       it 'goes East' do
         subject
 
-        expect(map.current_room).to eq(map.map[1][0])
+        expect(map.current_room).to eq(map.rooms[1][0])
       end
     end
   end

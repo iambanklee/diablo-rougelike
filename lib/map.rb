@@ -7,7 +7,7 @@ class Map
   EAST = [1, 0].freeze
   DIRECTIONS = [NORTH, WEST, EAST, SOUTH].freeze
 
-  attr_reader :map, :rows, :cols,
+  attr_reader :rooms, :rows, :cols,
               :current_room, :current_x, :current_y
 
   # TODO: Extract
@@ -18,7 +18,7 @@ class Map
   end
 
   def initialize(rows:, cols:)
-    @map = Array.new(rows) { Array.new(cols) }
+    @rooms = Array.new(rows) { Array.new(cols) }
     @rows = rows
     @cols = cols
     @current_x = 0
@@ -39,10 +39,10 @@ class Map
     adjacent_y = current_y + NORTH.last
 
     if adjacent_y >= 0 && adjacent_y <= cols - 1
-      map[current_x][adjacent_y] ||= Room.new("#{current_x}-#{adjacent_y}")
+      rooms[current_x][adjacent_y] ||= Room.new("#{current_x}-#{adjacent_y}")
 
       @current_y = adjacent_y
-      @current_room = @map[current_x][current_y]
+      @current_room = @rooms[current_x][current_y]
     end
   end
 
@@ -51,7 +51,7 @@ class Map
     adjacent_y = @current_y + direction.last
 
     if (adjacent_x >= 0 && adjacent_x <= rows - 1) && (adjacent_y >= 0 && adjacent_y <= cols - 1)
-      map[adjacent_x][adjacent_y] ||= Room.new("#{adjacent_x}-#{adjacent_y}")
+      rooms[adjacent_x][adjacent_y] ||= Room.new("#{adjacent_x}-#{adjacent_y}")
 
       @current_x = adjacent_x
       @current_y = adjacent_y
@@ -62,11 +62,11 @@ class Map
   private
 
   def set_entry_point
-    @map[current_x][current_y] = Room.new("#{current_x}-#{current_y}")
+    @rooms[current_x][current_y] = Room.new("#{current_x}-#{current_y}")
     set_current_room
   end
 
   def set_current_room
-    @current_room = map[current_x][current_y]
+    @current_room = rooms[current_x][current_y]
   end
 end
