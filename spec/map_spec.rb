@@ -3,7 +3,9 @@
 require 'rspec'
 require 'map'
 
-RSpec.xdescribe Map do
+RSpec.describe Map do
+  describe 'You can move between the rooms using some keyboard inputs'
+
   describe '.new' do
     let(:new_map) { described_class.new(rows: x, cols: y) }
 
@@ -16,18 +18,14 @@ RSpec.xdescribe Map do
     end
   end
 
-  describe '#enter' do
-    subject(:enter) { map.enter(x, y) }
-    let!(:map) { described_class.new(rows: 4, cols: 3) }
+  describe '#start' do
+    subject(:enter) { map.start }
+    let(:map) { described_class.new(rows: 3, cols: 3) }
 
-    let(:x) { 2 }
-    let(:y) { 2 }
-
-    it 'enter the room' do
+    it 'go to first room' do
       subject
 
-      expect(map.map[x][y]).to eq(true)
-      expect(map.map[0][0]).to be_nil
+      expect(map.map[0][0]).to eq(map.current_room)
     end
   end
 end

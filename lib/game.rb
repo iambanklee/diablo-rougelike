@@ -23,7 +23,6 @@ class Game
 
     until map.cleared?
       room.enter
-      puts "Enter #{room.name}"
 
       begin
         puts "[0] Go up"
