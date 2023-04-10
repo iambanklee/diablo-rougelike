@@ -40,4 +40,61 @@ RSpec.describe Map do
     end
   end
 
+  describe '#go_direction' do
+    subject(:go_north) { map.go_direction(direction: direction) }
+    let(:map) { described_class.new(rows: 3, cols: 3) }
+
+    context 'when direction is North' do
+      let(:direction) { Map::NORTH }
+
+      it 'goes North' do
+        subject
+
+        expect(map.current_room).to eq(map.map[0][1])
+      end
+    end
+
+    context 'when direction is South' do
+      let(:direction) { Map::SOUTH }
+
+      context 'when no room at South' do
+        it 'stays at current room' do
+          subject
+
+          expect(map.current_room).to eq(map.map[0][0])
+        end
+      end
+    end
+
+    context 'when direction is West' do
+      let(:direction) { Map::WEST }
+
+      it 'goes West' do
+        map.go_direction(direction: Map::EAST)
+        map.go_direction(direction: Map::NORTH)
+
+        subject
+
+        expect(map.current_room).to eq(map.map[0][1])
+      end
+
+      context 'when no room at West' do
+        it 'stays at current room' do
+          subject
+
+          expect(map.current_room).to eq(map.map[0][0])
+        end
+      end
+    end
+
+    context 'when direction is East' do
+      let(:direction) { Map::EAST }
+
+      it 'goes East' do
+        subject
+
+        expect(map.current_room).to eq(map.map[1][0])
+      end
+    end
+  end
 end

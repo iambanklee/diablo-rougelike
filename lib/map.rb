@@ -21,6 +21,8 @@ class Map
     @map = Array.new(rows) { Array.new(cols) }
     @rows = rows
     @cols = cols
+    @current_x = 0
+    @current_y = 0
 
     set_entry_point
   end
@@ -44,22 +46,27 @@ class Map
     end
   end
 
-  def go_left
-  end
+  def go_direction(direction:)
+    adjacent_x = @current_x + direction.first
+    adjacent_y = @current_y + direction.last
 
-  def go_down
-  end
+    if (adjacent_x >= 0 && adjacent_x <= rows - 1) && (adjacent_y >= 0 && adjacent_y <= cols - 1)
+      map[adjacent_x][adjacent_y] ||= Room.new("#{adjacent_x}-#{adjacent_y}")
 
-  def go_right
+      @current_x = adjacent_x
+      @current_y = adjacent_y
+      set_current_room
+    end
   end
 
   private
 
   def set_entry_point
-    @current_x = 0
-    @current_y = 0
+    @map[current_x][current_y] = Room.new("#{current_x}-#{current_y}")
+    set_current_room
+  end
 
-    @map[@current_x][@current_y] = Room.new("#{@current_x}-#{@current_y}")
-    @current_room = @map[current_x][current_x]
+  def set_current_room
+    @current_room = map[current_x][current_y]
   end
 end
