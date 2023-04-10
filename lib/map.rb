@@ -35,17 +35,6 @@ class Map
     @cleared
   end
 
-  def go_north
-    adjacent_y = current_y + NORTH.last
-
-    if adjacent_y >= 0 && adjacent_y <= cols - 1
-      rooms[current_x][adjacent_y] ||= Room.new("#{current_x}-#{adjacent_y}")
-
-      @current_y = adjacent_y
-      @current_room = @rooms[current_x][current_y]
-    end
-  end
-
   def go_direction(direction:)
     adjacent_x = @current_x + direction.first
     adjacent_y = @current_y + direction.last
