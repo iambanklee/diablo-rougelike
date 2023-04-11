@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative 'room'
+
 class Map
   NORTH = [0, 1].freeze
   SOUTH = [0, -1].freeze
@@ -11,13 +13,6 @@ class Map
               :current_room, :current_x, :current_y, :final_room
 
   attr_accessor :cleared
-
-  # TODO: Extract
-  Room = Struct.new(:name) do
-    def enter
-      puts "Enter #{name}"
-    end
-  end
 
   def initialize(rows:, cols:)
     @rooms = Array.new(rows) { Array.new(cols) }
@@ -44,7 +39,7 @@ class Map
     adjacent_y = @current_y + direction.last
 
     if (adjacent_x >= 0 && adjacent_x <= rows - 1) && (adjacent_y >= 0 && adjacent_y <= cols - 1)
-      rooms[adjacent_x][adjacent_y] ||= Room.new("#{adjacent_x}-#{adjacent_y}")
+      rooms[adjacent_x][adjacent_y] ||= Room.new(name: "#{adjacent_x}-#{adjacent_y}")
 
       @current_x = adjacent_x
       @current_y = adjacent_y
@@ -55,12 +50,12 @@ class Map
   private
 
   def set_entry_point
-    @rooms[current_x][current_y] = Room.new("#{current_x}-#{current_y}")
+    @rooms[current_x][current_y] = Room.new(name: "#{current_x}-#{current_y}")
     set_current_room
   end
 
   def set_final_point
-    @rooms[rows - 1][cols - 1] ||= Room.new("#{rows - 1}-#{cols - 1}")
+    @rooms[rows - 1][cols - 1] ||= Room.new(name: "#{rows - 1}-#{cols - 1}")
     @final_room = @rooms[rows - 1][cols - 1]
   end
 
