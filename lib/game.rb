@@ -3,6 +3,26 @@ require_relative 'map'
 
 class Game
   attr_reader :map, :player_name, :player_class
+
+  KEY_MAPPING = {
+    'W' => {
+      text: 'Go North',
+      action: -> (map) { map.go_direction(direction: Map::NORTH) }
+    },
+    'A' => {
+      text: 'Go West',
+      action: -> (map) { map.go_direction(direction: Map::WEST) }
+    },
+    'S' => {
+      text: 'Go South',
+      action: -> (map) { map.go_direction(direction: Map::SOUTH) }
+    },
+    'D' => {
+      text: 'Go East',
+      action: -> (map) { map.go_direction(direction: Map::EAST) }
+    },
+  }
+
   def initialize
     @map = Map.new(rows: 3, cols: 3)
   end
@@ -40,17 +60,7 @@ class Game
       end until move_direction.match(/[WASD]/)
 
       puts "you are going #{move_direction}"
-
-      case move_direction
-      when 'W'
-        @map.go_direction(direction: Map::NORTH)
-      when 'A'
-        @map.go_direction(direction: Map::WEST)
-      when 'S'
-        @map.go_direction(direction: Map::SOUTH)
-      when 'D'
-        @map.go_direction(direction: Map::EAST)
-      end
+      KEY_MAPPING[move_direction][:action].call(@map)
 
       room = @map.current_room
     end
