@@ -1,8 +1,24 @@
 # frozen_string_literal: true
 require_relative 'map'
+require_relative 'character'
 
 class Game
-  attr_reader :map, :player_name, :player_class
+  attr_reader :map, :player
+
+  CLASS_LIST = {
+    'Barbarian' => {
+      hp: 200,
+      damage: 15,
+    },
+    'Sorcerer' => {
+      hp: 100,
+      damage: 50,
+    },
+    'Rouge' => {
+      hp: 150,
+      damage: 35,
+    },
+  }.freeze
 
   def initialize
     @map = Map.new(rows: 3, cols: 3)
@@ -12,13 +28,22 @@ class Game
     puts
     puts "========== Diablo Rougelike =========="
     puts
-    puts "Greetings travellers, what's your name?"
-    @player_name = Kernel.gets.chomp
+    puts "Greetings adventurer, what's your name?"
+    player_name = Kernel.gets.chomp
 
     puts "#{player_name}, what class do you want to play this time?"
-    @player_class = Kernel.gets.chomp
+    player_class = ''
+
+    until CLASS_LIST[player_class]
+      puts "There are #{CLASS_LIST.keys.size} classes you can choose from: #{CLASS_LIST.keys.join(', ')}"
+      player_class = Kernel.gets.chomp
+    end
 
     puts "#{player_class} - great choice! Let's go for a run!"
+
+    @player = Character.new(name: player_name,
+                            hp: CLASS_LIST[player_class][:hp],
+                            damage: CLASS_LIST[player_class][:damage])
 
     room = @map.start
 
