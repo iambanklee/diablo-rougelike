@@ -13,6 +13,7 @@ RSpec.describe 'Game' do
     context 'when win condition achieved' do
       before do
         allow(Kernel).to receive(:gets).and_return('Bank', 'Mage', 'D', 'W', 'A', 'W', 'D', 'S', 'D', 'W')
+        allow(Kernel).to receive(:rand).and_return(200)
       end
 
       it 'prints game result' do

@@ -5,9 +5,10 @@ require 'room'
 
 RSpec.describe Room do
   describe '.new' do
-    subject(:new_room) { Room.new(name: name) }
+    subject(:new_room) { Room.new(name: name, event_rate: event_rate) }
 
     let(:name) { 'Room A' }
+    let(:event_rate) { -1 }
 
     it 'creates room by given name' do
       expect(new_room.name).to eq(name)
@@ -23,18 +24,39 @@ RSpec.describe Room do
   describe '#enter' do
     subject(:enter_room) { room.enter }
 
-    let(:room){ Room.new(name: name) }
+    let(:room){ Room.new(name: name, event_rate: event_rate) }
     let(:name) { 'Room A' }
 
-    it 'output welcome message' do
-      expect { enter_room }.to output(/You entered the room #{name}/).to_stdout
+    context 'when there is no event in the room' do
+      let(:event_rate) { -1 }
+
+      it 'output welcome message' do
+        expect { enter_room }.to output(/You entered the room #{name}/).to_stdout
+        expect(room.completed?).to eq(true)
+      end
+
+      it 'output room details' do
+        expect { enter_room }.to output(Regexp.new(room.description)).to_stdout
+        expect(room.completed?).to eq(true)
+      end
     end
 
-    it 'output room details' do
-      expect { enter_room }.to output(Regexp.new(room.description)).to_stdout
+    context 'when there is event in the room' do
+      let(:event_rate) { 1000 }
+
+      before do
+        stub_const('Challenge::CHALLENGE_OPERATORS', ['/'])
+        allow(Random).to receive(:rand).and_return(67, 8)
+        allow(Kernel).to receive(:gets).and_return('8')
+      end
+
+      it 'marks the room completed after challenge solved' do
+        expect { enter_room }.to output(/67 \/ 8.*Challenge completed!/m).to_stdout
+
+        expect(room.completed?).to eq(true)
+      end
     end
   end
 
-  describe 'There could be some events in the rooms'
   describe 'You need to fight a final enemy'
 end
