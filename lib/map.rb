@@ -8,6 +8,30 @@ class Map
   WEST = [-1, 0].freeze
   EAST = [1, 0].freeze
   DIRECTIONS = [NORTH, WEST, EAST, SOUTH].freeze
+  DIRECTION_MAPPING = {
+    NORTH => {
+      input: 'W',
+      text: 'Go North'
+    },
+    WEST => {
+      input: 'A',
+      text: 'Go West'
+    },
+    SOUTH => {
+      input: 'S',
+      text: 'Go South'
+    },
+    EAST => {
+      input: 'D',
+      text: 'Go East'
+    },
+  }
+
+  ActionItem = Struct.new(:key, :value, :action) do
+    def execute(*arg)
+      action.call(*arg) if action
+    end
+  end
 
   attr_reader :rooms, :rows, :cols,
               :current_room, :current_x, :current_y, :final_room
@@ -32,6 +56,34 @@ class Map
 
   def cleared?
     @cleared
+  end
+
+  def display_action_menu
+    puts action_menu
+  end
+
+  def action_menu
+    action_items.map { |action| "[#{action.key}] #{action.value}" }.join("\n")
+  end
+
+  def action_items
+    actions = []
+
+    available_directions.each do |direction|
+      item = DIRECTION_MAPPING[direction]
+      actions << ActionItem.new(item[:input], item[:text], ->(map) { map.go_direction(direction: direction) } )
+    end
+
+    actions
+  end
+
+  def available_directions
+    DIRECTIONS.select do |direction|
+      adjacent_x = @current_x + direction.first
+      adjacent_y = @current_y + direction.last
+
+      (adjacent_x >= 0 && adjacent_x <= rows - 1) && (adjacent_y >= 0 && adjacent_y <= cols - 1)
+    end
   end
 
   def go_direction(direction:)

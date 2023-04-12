@@ -4,7 +4,6 @@ require 'rspec'
 require 'game'
 
 RSpec.describe 'Game' do
-  describe 'There should be at least 4 different rooms'
   describe 'A help section for the commands is necessary'
 
   describe '#start' do

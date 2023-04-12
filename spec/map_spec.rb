@@ -4,8 +4,6 @@ require 'rspec'
 require 'map'
 
 RSpec.describe Map do
-  describe 'You can move between the rooms using some keyboard inputs'
-
   describe '.new' do
     let(:new_map) { described_class.new(rows: x, cols: y) }
 
@@ -29,6 +27,33 @@ RSpec.describe Map do
       subject
 
       expect(map.rooms[0][0]).to eq(map.current_room)
+    end
+  end
+
+  describe '#action_menu' do
+    subject(:action_menu) { map.action_menu }
+    let(:map) { described_class.new(rows: 3, cols: 3) }
+
+    it 'returns actionable item of current room' do
+      expect(action_menu).to eq("[W] Go North\n[D] Go East")
+    end
+  end
+
+  describe '#action_items' do
+    subject(:action_items) { map.action_items }
+    let(:map) { described_class.new(rows: 3, cols: 3) }
+
+    it 'returns actionable item of current room' do
+      expect(action_items.map(&:key)).to match_array(%w[W D])
+    end
+  end
+
+  describe '#available_directions' do
+    subject(:available_directions) { map.available_directions }
+    let(:map) { described_class.new(rows: 3, cols: 3) }
+
+    it 'returns available directions of current room' do
+      expect(available_directions).to match_array([Map::NORTH, Map::EAST])
     end
   end
 

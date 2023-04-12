@@ -4,25 +4,6 @@ require_relative 'map'
 class Game
   attr_reader :map, :player_name, :player_class
 
-  KEY_MAPPING = {
-    'W' => {
-      text: 'Go North',
-      action: -> (map) { map.go_direction(direction: Map::NORTH) }
-    },
-    'A' => {
-      text: 'Go West',
-      action: -> (map) { map.go_direction(direction: Map::WEST) }
-    },
-    'S' => {
-      text: 'Go South',
-      action: -> (map) { map.go_direction(direction: Map::SOUTH) }
-    },
-    'D' => {
-      text: 'Go East',
-      action: -> (map) { map.go_direction(direction: Map::EAST) }
-    },
-  }
-
   def initialize
     @map = Map.new(rows: 3, cols: 3)
   end
@@ -51,16 +32,13 @@ class Game
       end
 
       begin
-        puts "[W] Go North"
-        puts "[A] Go West"
-        puts "[S] Go South"
-        puts "[D] Go East"
+        map.display_action_menu
         puts "where do you go?"
         move_direction = Kernel.gets.chomp
-      end until move_direction.match(/[WASD]/)
+      end until move_direction.match(Regexp.new(map.action_items.map { |action| action.key }.join('|')))
 
       puts "you are going #{move_direction}"
-      KEY_MAPPING[move_direction][:action].call(@map)
+      map.action_items.detect { |item| item.key == move_direction }.execute(map)
 
       room = @map.current_room
     end
