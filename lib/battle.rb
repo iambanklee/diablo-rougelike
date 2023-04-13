@@ -16,32 +16,38 @@ class Battle
   end
 
   def start
-    puts
-    puts "You have encountered an enemy: #{enemy.name}"
-    puts 'Battle started!'
+    print_start_message
 
-    attack_sequence = [player, enemy]
+    auto_battle until completed?
 
-    until completed?
-      attacker = attack_sequence.shift
-      receiver = attack_sequence.shift
-      attack_sequence << receiver
-      attack_sequence << attacker
-
-      attacker.attack(receiver)
-      if receiver.hp <= 0
-        @winner = attacker
-        break
-      end
-    end
-
-    result
-    mark_as_completed
+    print_result
   end
 
   private
 
-  def result
+  def auto_battle
+    attacker = attack_sequence.shift
+    receiver = attack_sequence.shift
+    attack_sequence.push(receiver).push(attacker)
+
+    attacker.attack(receiver)
+    return unless receiver.hp <= 0
+
+    @winner = attacker
+    mark_as_completed
+  end
+
+  def attack_sequence
+    @attack_sequence ||= [player, enemy]
+  end
+
+  def print_result
     puts "#{winner.name} has won the battle with #{winner.hp} HP left"
+  end
+
+  def print_start_message
+    puts
+    puts "You have encountered an enemy: #{enemy.name}"
+    puts 'Battle started!'
   end
 end

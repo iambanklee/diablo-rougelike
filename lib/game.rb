@@ -30,21 +30,13 @@ class Game
     @map = Map.new(rows: 3, cols: 3)
   end
 
-  def start
-    puts
-    puts '========== Diablo Rougelike =========='
-    puts
-    puts "Greetings adventurer, what's your name?"
-    player_name = Kernel.gets.chomp
+  def prepare_player
+    print_title
+    player_name = player_name_input
 
     puts
     puts "#{player_name}, what class do you want to play this time?"
-    player_class = ''
-
-    until CLASS_LIST[player_class]
-      puts "There are #{CLASS_OPTIONS.size} classes you can choose from: #{CLASS_OPTIONS_TEXT}"
-      player_class = Kernel.gets.chomp
-    end
+    player_class = player_class_input
 
     puts "#{player_class} - great choice! Let's go for a run!"
 
@@ -52,6 +44,10 @@ class Game
                             character_class: player_class,
                             hp: CLASS_LIST[player_class][:hp],
                             damage: CLASS_LIST[player_class][:damage])
+  end
+
+  def start
+    prepare_player
 
     until map.completed?
       room = map.current_room
@@ -90,5 +86,29 @@ class Game
     else
       puts 'Game Over'
     end
+  end
+
+  private
+
+  def print_title
+    puts
+    puts '========== Diablo Rougelike =========='
+    puts
+  end
+
+  def player_name_input
+    puts "Greetings adventurer, what's your name?"
+    Kernel.gets.chomp
+  end
+
+  def player_class_input
+    player_class = ''
+
+    until CLASS_LIST[player_class]
+      puts "There are #{CLASS_OPTIONS.size} classes you can choose from: #{CLASS_OPTIONS_TEXT}"
+      player_class = Kernel.gets.chomp
+    end
+
+    player_class
   end
 end
