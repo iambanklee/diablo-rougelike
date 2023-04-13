@@ -2,6 +2,7 @@
 
 require_relative 'room'
 
+# Represents the overview of rooms and responsible for moving around rooms
 class Map
   include Completable
 
@@ -76,25 +77,16 @@ class Map
   end
 
   def available_directions
-    DIRECTIONS.select do |direction|
-      adjacent_x = @current_x + direction.first
-      adjacent_y = @current_y + direction.last
-
-      (adjacent_x >= 0 && adjacent_x <= rows - 1) && (adjacent_y >= 0 && adjacent_y <= cols - 1)
-    end
+    DIRECTIONS.select { |direction| valid_direction?(direction: direction) }
   end
 
   def go_direction(direction:)
-    adjacent_x = @current_x + direction.first
-    adjacent_y = @current_y + direction.last
+    return unless valid_direction?(direction: direction)
 
-    if (adjacent_x >= 0 && adjacent_x <= rows - 1) && (adjacent_y >= 0 && adjacent_y <= cols - 1)
-      rooms[adjacent_x][adjacent_y] ||= Room.new(name: "#{adjacent_x}-#{adjacent_y}")
-
-      @current_x = adjacent_x
-      @current_y = adjacent_y
-      set_current_room
-    end
+    @current_x += direction.first
+    @current_y += direction.last
+    rooms[current_x][current_y] ||= Room.new(name: "#{current_x}-#{current_y}")
+    set_current_room
   end
 
   private
@@ -105,11 +97,18 @@ class Map
   end
 
   def set_final_point
-    @rooms[rows - 1][cols - 1] ||= Room.new(name: "#{rows - 1}-#{cols - 1}")
-    @final_room = @rooms[rows - 1][cols - 1]
+    @final_room = Room.new(name: 'FINAL')
+    @rooms[rows - 1][cols - 1] = @final_room
   end
 
   def set_current_room
     @current_room = rooms[current_x][current_y]
+  end
+
+  def valid_direction?(direction:)
+    adjacent_x = current_x + direction.first
+    adjacent_y = current_y + direction.last
+
+    (adjacent_x >= 0 && adjacent_x <= rows - 1) && (adjacent_y >= 0 && adjacent_y <= cols - 1)
   end
 end

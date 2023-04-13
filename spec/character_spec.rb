@@ -6,8 +6,8 @@ require 'character'
 RSpec.describe Character do
   subject(:character_attack) { character.attack(other) }
 
-  let(:character) { Character.new(name: 'Player', hp: 100, damage: 10) }
-  let(:other) { Character.new(name: 'BOSS', hp: 50, damage: 20) }
+  let(:character) { Character.new(name: 'Player', character_class: 'Rouge', hp: 100, damage: 10) }
+  let(:other) { Character.new(name: 'BOSS', character_class: 'Monster', hp: 50, damage: 20) }
 
   it 'attacks other and reduces their HP' do
     expect { character_attack }.to output(<<~OUTPUT

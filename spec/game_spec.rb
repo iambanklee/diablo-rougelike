@@ -101,7 +101,7 @@ RSpec.describe 'Game' do
           [S] Go South
           you are going W
 
-          You entered the room 2-2.
+          You entered the room FINAL.
           You are in a room look like old medieval castle
 
           You have encountered an enemy: BOSS

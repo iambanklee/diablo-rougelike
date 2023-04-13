@@ -10,8 +10,8 @@ RSpec.describe 'Battle' do
     subject(:battle_start) { battle.start }
 
     let(:battle) { Battle.new(player: player, enemy: boss) }
-    let(:player) { Character.new(name: 'Player', hp: 100, damage: 30) }
-    let(:boss) { Character.new(name: 'BOSS', hp: 50, damage: 25) }
+    let(:player) { Character.new(name: 'Player', character_class: 'Rouge', hp: 100, damage: 30) }
+    let(:boss) { Character.new(name: 'BOSS', character_class: 'Monster', hp: 50, damage: 25) }
 
     context 'when player wins the battle' do
       it 'returns the battle result' do
@@ -35,7 +35,7 @@ RSpec.describe 'Battle' do
     end
 
     context 'when boss wins the battle' do
-      let(:boss) { Character.new(name: 'BOSS', hp: 500, damage: 50) }
+      let(:boss) { Character.new(name: 'BOSS', character_class: 'Monster', hp: 500, damage: 50) }
       it 'returns the battle result' do
         expect { battle_start }.to output(<<~OUTPUT
 

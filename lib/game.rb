@@ -48,6 +48,7 @@ class Game
     puts "#{player_class} - great choice! Let's go for a run!"
 
     @player = Character.new(name: player_name,
+                            character_class: player_class,
                             hp: CLASS_LIST[player_class][:hp],
                             damage: CLASS_LIST[player_class][:damage])
 
@@ -56,7 +57,7 @@ class Game
       room.enter
 
       if room == map.final_room
-        boss = Character.new(name: 'BOSS', hp: 100, damage: 20)
+        boss = Character.new(name: 'BOSS', character_class: 'Monster', hp: 100, damage: 20)
         battle = Battle.new(player: player, enemy: boss)
         battle.start
 
@@ -84,7 +85,7 @@ class Game
     end
 
     if battle.winner == player
-      puts "Congratulations #{player.name}, you have won the game by using #{player_class}"
+      puts "Congratulations #{player.name}, you have won the game by using #{player.character_class}"
     else
       puts 'Game Over'
     end
