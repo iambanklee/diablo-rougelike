@@ -47,12 +47,12 @@ class Game
 
     room = @map.start
 
-    until map.cleared?
+    until map.completed?
       room.enter
 
       if room == @map.final_room
         # TODO: final boss
-        map.cleared = true
+        map.mark_as_completed
         next
       end
 

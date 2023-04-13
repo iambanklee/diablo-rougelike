@@ -3,6 +3,8 @@
 require_relative 'room'
 
 class Map
+  include Completable
+
   NORTH = [0, 1].freeze
   SOUTH = [0, -1].freeze
   WEST = [-1, 0].freeze
@@ -52,10 +54,6 @@ class Map
 
   def start
     current_room
-  end
-
-  def cleared?
-    @cleared
   end
 
   def display_action_menu

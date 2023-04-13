@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-class Challenge
-  CHALLENGE_OPERATORS = %w[+ - * /].freeze
+require_relative 'completable'
 
-  def initialize
-    @completed = false
-  end
+class Challenge
+  include Completable
+
+  CHALLENGE_OPERATORS = %w[+ - * /].freeze
 
   def formula
     @formula ||= "#{Random.rand(100)} #{CHALLENGE_OPERATORS.sample} #{Random.rand(100)}"
@@ -15,10 +15,6 @@ class Challenge
     @expected_result ||= eval(formula)
   end
 
-  def completed?
-    @completed
-  end
-
   def start
     until completed?
       puts 'You need to solve this challenge before you can go anywhere'
@@ -26,7 +22,7 @@ class Challenge
       input = Kernel.gets.chomp
 
       if input == expected_result.to_s
-        @completed = true
+        mark_as_completed
         puts 'Challenge completed!'
       end
     end

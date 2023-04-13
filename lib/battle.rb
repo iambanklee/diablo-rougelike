@@ -1,19 +1,17 @@
 # frozen_string_literal: true
 
+require_relative 'completable'
 require_relative 'character'
 
 class Battle
+  include Completable
+
   attr_reader :player, :enemy
 
   def initialize(player:, enemy:)
     @player = player
     @enemy = enemy
     @winner = nil
-    @completed = false
-  end
-
-  def completed?
-    @completed
   end
 
   def start
@@ -32,7 +30,7 @@ class Battle
     end
 
     result
-    @completed = true
+    mark_as_completed
   end
 
   private
