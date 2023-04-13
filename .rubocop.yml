@@ -2,6 +2,10 @@ AllCops:
   NewCops: enable
   Exclude:
     - 'Guardfile'
+    - 'spec/spec_helper.rb'
+
+Metrics/MethodLength:
+  Max: 30
 
 Metrics/BlockLength:
   Exclude:
@@ -12,5 +16,9 @@ Style/Documentation:
     - 'spec/**/*'
 
 Layout/LineLength:
+  Exclude:
+    - 'spec/**/*'
+
+Layout/EmptyLinesAroundArguments:
   Exclude:
     - 'spec/**/*'

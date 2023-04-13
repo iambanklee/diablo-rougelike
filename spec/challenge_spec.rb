@@ -32,12 +32,13 @@ RSpec.describe Challenge do
       end
 
       it 'marks the challenge completed' do
-        expect{ challenge_start }.to output(<<~OUTPUT
-          You need to solve this challenge before you can go anywhere
-          5 * 15
-          You need to solve this challenge before you can go anywhere
-          5 * 15
-          Challenge completed!
+        expect { challenge_start }.to output(
+          <<~OUTPUT
+            You need to solve this challenge before you can go anywhere
+            5 * 15
+            You need to solve this challenge before you can go anywhere
+            5 * 15
+            Challenge completed!
           OUTPUT
         ).to_stdout
         expect(challenge.completed?).to eq(true)
@@ -52,10 +53,11 @@ RSpec.describe Challenge do
       end
 
       it 'marks the challenge completed' do
-        expect{ challenge_start }.to output(<<~OUTPUT
-          You need to solve this challenge before you can go anywhere
-          5 + 15
-          Challenge completed!
+        expect { challenge_start }.to output(
+          <<~OUTPUT
+            You need to solve this challenge before you can go anywhere
+            5 + 15
+            Challenge completed!
           OUTPUT
         ).to_stdout
         expect(challenge.completed?).to eq(true)

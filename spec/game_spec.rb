@@ -20,103 +20,106 @@ RSpec.describe 'Game' do
         stub_const('Room::ROOM_LOCATIONS', ['castle'])
       end
 
+      # rubocop:disable Layout/TrailingWhitespace
       it 'prints game result' do
-        expect { game_start }.to output(<<~OUTPUT
+        expect { game_start }.to output(
+          <<~OUTPUT
 
-          ========== Diablo Rougelike ==========
-          
-          Greetings adventurer, what's your name?
+            ========== Diablo Rougelike ==========
+            
+            Greetings adventurer, what's your name?
 
-          Bank, what class do you want to play this time?
-          There are 3 classes you can choose from: Barbarian, Sorcerer and Rouge
-          Sorcerer - great choice! Let's go for a run!
+            Bank, what class do you want to play this time?
+            There are 3 classes you can choose from: Barbarian, Sorcerer and Rouge
+            Sorcerer - great choice! Let's go for a run!
 
-          You entered the room 0-0.
-          You are in a room look like old medieval castle
-          What do you do?
-          [W] Go North
-          [D] Go East
-          you are going D
+            You entered the room 0-0.
+            You are in a room look like old medieval castle
+            What do you do?
+            [W] Go North
+            [D] Go East
+            you are going D
 
-          You entered the room 1-0.
-          You are in a room look like old medieval castle
-          What do you do?
-          [W] Go North
-          [A] Go West
-          [D] Go East
+            You entered the room 1-0.
+            You are in a room look like old medieval castle
+            What do you do?
+            [W] Go North
+            [A] Go West
+            [D] Go East
 
-          [X] isn't in the options
-          What do you do?
-          [W] Go North
-          [A] Go West
-          [D] Go East
-          you are going W
+            [X] isn't in the options
+            What do you do?
+            [W] Go North
+            [A] Go West
+            [D] Go East
+            you are going W
 
-          You entered the room 1-1.
-          You are in a room look like old medieval castle
-          What do you do?
-          [W] Go North
-          [A] Go West
-          [D] Go East
-          [S] Go South
-          you are going A
+            You entered the room 1-1.
+            You are in a room look like old medieval castle
+            What do you do?
+            [W] Go North
+            [A] Go West
+            [D] Go East
+            [S] Go South
+            you are going A
 
-          You entered the room 0-1.
-          You are in a room look like old medieval castle
-          What do you do?
-          [W] Go North
-          [D] Go East
-          [S] Go South
-          you are going W
+            You entered the room 0-1.
+            You are in a room look like old medieval castle
+            What do you do?
+            [W] Go North
+            [D] Go East
+            [S] Go South
+            you are going W
 
-          You entered the room 0-2.
-          You are in a room look like old medieval castle
-          What do you do?
-          [D] Go East
-          [S] Go South
-          you are going D
+            You entered the room 0-2.
+            You are in a room look like old medieval castle
+            What do you do?
+            [D] Go East
+            [S] Go South
+            you are going D
 
-          You entered the room 1-2.
-          You are in a room look like old medieval castle
-          What do you do?
-          [A] Go West
-          [D] Go East
-          [S] Go South
-          you are going S
+            You entered the room 1-2.
+            You are in a room look like old medieval castle
+            What do you do?
+            [A] Go West
+            [D] Go East
+            [S] Go South
+            you are going S
 
-          You entered the room 1-1.
-          You are in a room look like old medieval castle
-          What do you do?
-          [W] Go North
-          [A] Go West
-          [D] Go East
-          [S] Go South
-          you are going D
+            You entered the room 1-1.
+            You are in a room look like old medieval castle
+            What do you do?
+            [W] Go North
+            [A] Go West
+            [D] Go East
+            [S] Go South
+            you are going D
 
-          You entered the room 2-1.
-          You are in a room look like old medieval castle
-          What do you do?
-          [W] Go North
-          [A] Go West
-          [S] Go South
-          you are going W
+            You entered the room 2-1.
+            You are in a room look like old medieval castle
+            What do you do?
+            [W] Go North
+            [A] Go West
+            [S] Go South
+            you are going W
 
-          You entered the room FINAL.
-          You are in a room look like old medieval castle
+            You entered the room FINAL.
+            You are in a room look like old medieval castle
 
-          You have encountered an enemy: BOSS
-          Battle started!
-          Bank attacked BOSS, caused 50 damages
-          BOSS HP: 50
-          BOSS attacked Bank, caused 20 damages
-          Bank HP: 80
-          Bank attacked BOSS, caused 50 damages
-          BOSS HP: 0
-          Bank has won the battle with 80 HP left
-          Congratulations Bank, you have won the game by using Sorcerer
-        OUTPUT
+            You have encountered an enemy: BOSS
+            Battle started!
+            Bank attacked BOSS, caused 50 damages
+            BOSS HP: 50
+            BOSS attacked Bank, caused 20 damages
+            Bank HP: 80
+            Bank attacked BOSS, caused 50 damages
+            BOSS HP: 0
+            Bank has won the battle with 80 HP left
+            Congratulations Bank, you have won the game by using Sorcerer
+          OUTPUT
         ).to_stdout
       end
+      # rubocop:enable Layout/TrailingWhitespace
     end
   end
 end

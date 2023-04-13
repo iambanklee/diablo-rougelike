@@ -10,10 +10,11 @@ RSpec.describe Character do
   let(:other) { Character.new(name: 'BOSS', character_class: 'Monster', hp: 50, damage: 20) }
 
   it 'attacks other and reduces their HP' do
-    expect { character_attack }.to output(<<~OUTPUT
-      Player attacked BOSS, caused 10 damages
-      BOSS HP: 40
-    OUTPUT
+    expect { character_attack }.to output(
+      <<~OUTPUT
+        Player attacked BOSS, caused 10 damages
+        BOSS HP: 40
+      OUTPUT
     ).to_stdout
   end
 end

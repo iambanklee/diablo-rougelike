@@ -2,6 +2,7 @@
 
 require_relative 'completable'
 
+# Represents an easy(!?) math challenge for players to resolve
 class Challenge
   include Completable
 
@@ -12,7 +13,7 @@ class Challenge
   end
 
   def expected_result
-    @expected_result ||= eval(formula)
+    @expected_result ||= instance_eval(formula)
   end
 
   def start

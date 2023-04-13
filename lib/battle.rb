@@ -3,6 +3,7 @@
 require_relative 'completable'
 require_relative 'character'
 
+# Represents an auto battle system of 2 characters
 class Battle
   include Completable
 

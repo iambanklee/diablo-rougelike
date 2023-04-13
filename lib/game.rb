@@ -4,6 +4,7 @@ require_relative 'battle'
 require_relative 'character'
 require_relative 'map'
 
+# The main entry point of game. Controls game flow and player inputs
 class Game
   attr_reader :map, :player
 
