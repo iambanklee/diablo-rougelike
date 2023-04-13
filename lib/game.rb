@@ -10,19 +10,20 @@ class Game
   CLASS_LIST = {
     'Barbarian' => {
       hp: 200,
-      damage: 15,
+      damage: 15
     },
     'Sorcerer' => {
       hp: 100,
-      damage: 50,
+      damage: 50
     },
     'Rouge' => {
       hp: 150,
-      damage: 35,
-    },
+      damage: 35
+    }
   }.freeze
 
   CLASS_OPTIONS = CLASS_LIST.keys.freeze
+  CLASS_OPTIONS_TEXT = "#{CLASS_OPTIONS.first(CLASS_OPTIONS.size - 1).join(', ')} and #{CLASS_OPTIONS.last}"
 
   def initialize
     @map = Map.new(rows: 3, cols: 3)
@@ -30,16 +31,17 @@ class Game
 
   def start
     puts
-    puts "========== Diablo Rougelike =========="
+    puts '========== Diablo Rougelike =========='
     puts
     puts "Greetings adventurer, what's your name?"
     player_name = Kernel.gets.chomp
 
+    puts
     puts "#{player_name}, what class do you want to play this time?"
     player_class = ''
 
     until CLASS_LIST[player_class]
-      puts "There are #{CLASS_OPTIONS.size} classes you can choose from: #{CLASS_OPTIONS.join(', ')}"
+      puts "There are #{CLASS_OPTIONS.size} classes you can choose from: #{CLASS_OPTIONS_TEXT}"
       player_class = Kernel.gets.chomp
     end
 
@@ -64,20 +66,27 @@ class Game
         end
       end
 
-      begin
+      action_input = ''
+      loop do
+        puts 'What do you do?'
         map.display_action_menu
-        puts "where do you go?"
-        move_direction = Kernel.gets.chomp
-      end until move_direction.match(Regexp.new(map.action_items.map { |action| action.key }.join('|')))
+        action_input = Kernel.gets.chomp
+        if action_input.match(Regexp.new(map.action_items.map(&:key).join('|')))
+          break
+        else
+          puts
+          puts "[#{action_input}] isn't in the options"
+        end
+      end
 
-      puts "you are going #{move_direction}"
-      map.action_items.detect { |item| item.key == move_direction }.execute(map)
+      puts "you are going #{action_input}"
+      map.action_items.detect { |item| item.key == action_input }.execute(map)
     end
 
     if battle.winner == player
       puts "Congratulations #{player.name}, you have won the game by using #{player_class}"
     else
-      puts "Game Over"
+      puts 'Game Over'
     end
   end
 end

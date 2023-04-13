@@ -26,12 +26,12 @@ class Map
     EAST => {
       input: 'D',
       text: 'Go East'
-    },
-  }
+    }
+  }.freeze
 
   ActionItem = Struct.new(:key, :value, :action) do
     def execute(*arg)
-      action.call(*arg) if action
+      action&.call(*arg)
     end
   end
 
@@ -69,7 +69,7 @@ class Map
 
     available_directions.each do |direction|
       item = DIRECTION_MAPPING[direction]
-      actions << ActionItem.new(item[:input], item[:text], ->(map) { map.go_direction(direction: direction) } )
+      actions << ActionItem.new(item[:input], item[:text], ->(map) { map.go_direction(direction: direction) })
     end
 
     actions

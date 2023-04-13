@@ -3,7 +3,6 @@
 require 'rspec'
 require 'completable'
 
-
 RSpec.describe Completable do
   describe '.included' do
     class DummyGame

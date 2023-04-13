@@ -3,6 +3,7 @@
 module Completable
   def completed?
     return @completed if defined? @completed
+
     @completed = false
   end
 

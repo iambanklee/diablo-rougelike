@@ -24,7 +24,7 @@ RSpec.describe Room do
   describe '#enter' do
     subject(:enter_room) { room.enter }
 
-    let(:room){ Room.new(name: name, event_rate: event_rate) }
+    let(:room) { Room.new(name: name, event_rate: event_rate) }
     let(:name) { 'Room A' }
 
     context 'when there is no event in the room' do
@@ -51,12 +51,10 @@ RSpec.describe Room do
       end
 
       it 'marks the room completed after challenge solved' do
-        expect { enter_room }.to output(/67 \/ 8.*Challenge completed!/m).to_stdout
+        expect { enter_room }.to output(%r{67 / 8.*Challenge completed!}m).to_stdout
 
         expect(room.completed?).to eq(true)
       end
     end
   end
-
-  describe 'You need to fight a final enemy'
 end

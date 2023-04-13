@@ -3,6 +3,8 @@
 require_relative 'completable'
 require_relative 'challenge'
 
+# Represents every room that player can travel around.
+# Based on RNG, a room might contain challenge for player to resolve or a enemy to fight
 class Room
   include Completable
 
@@ -20,9 +22,10 @@ class Room
   end
 
   def enter
+    puts
     puts "You entered the room #{name}."
     puts description
-    event.start if event
+    event&.start
     mark_as_completed
   end
 
@@ -45,6 +48,6 @@ class Room
   end
 
   def initialize_challenge
-    @event ||= event_rate >= Kernel.rand(100) ? Challenge.new : nil
+    @event = event_rate >= Kernel.rand(100) ? Challenge.new : nil
   end
 end

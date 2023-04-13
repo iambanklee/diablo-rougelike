@@ -32,6 +32,7 @@ class Challenge
 
   def correct_answer?(input)
     return true if input == formula # for cheating purpose on complex calculations lol
+
     input == expected_result.to_s
   end
 end

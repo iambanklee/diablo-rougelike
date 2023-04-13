@@ -2,3 +2,15 @@ AllCops:
   NewCops: enable
   Exclude:
     - 'Guardfile'
+
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*'
+
+Style/Documentation:
+  Exclude:
+    - 'spec/**/*'
+
+Layout/LineLength:
+  Exclude:
+    - 'spec/**/*'
