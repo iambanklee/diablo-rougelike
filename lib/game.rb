@@ -24,6 +24,27 @@ class Game
   CLASS_OPTIONS = CLASS_LIST.keys.freeze
   CLASS_OPTIONS_TEXT = "#{CLASS_OPTIONS.first(CLASS_OPTIONS.size - 1).join(', ')} and #{CLASS_OPTIONS.last}"
 
+  HELP_TEXT = <<~HELP
+    ==========================================================================================
+    Movement:
+      - Use [W, A, S ,D] (case sensitive) to move around the rooms
+      
+    How to win the game:
+      - You need to go to the final room and fight the boss
+
+    Game Over:
+      - If your character HP <= 0
+   
+    Random challenges:
+      - You might get some easy math challenges while you enter the room
+      - There is no challenges in final room
+      - If you having troubles in calculating, there are tips:
+        - Use calculator
+        - Use cheat code by entering exact wording of challenge (on your own risk) 
+          - Example: '5 + 10'
+    ==========================================================================================
+  HELP
+
   def initialize
     @map = Map.new(rows: 3, cols: 3)
   end
@@ -88,14 +109,18 @@ class Game
   end
 
   def display_help_menu
-    puts 'Help menu'
+    puts HELP_TEXT
   end
 
   def display_game_result
-    if player.hp.positive?
+    if win?
       puts "Congratulations #{player.name}, you have won the game by using #{player.character_class}"
     else
       puts 'Game Over'
     end
+  end
+
+  def win?
+    player.hp.positive?
   end
 end

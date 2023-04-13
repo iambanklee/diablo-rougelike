@@ -10,15 +10,16 @@ RSpec.describe 'Game' do
     subject(:game_start) { game.start }
     let(:game) { Game.new }
 
-    context 'when win condition achieved' do
-      before do
-        allow(Kernel).to receive(:gets).and_return('Bank', 'Sorcerer', 'D', 'X', 'W', 'A', 'W', 'D', 'S', 'D', 'W')
-        allow(Kernel).to receive(:rand).and_return(200)
+    before do
+      allow(Kernel).to receive(:gets).and_return('Bank', 'Sorcerer', 'D', 'X', 'help', 'W', 'A', 'W', 'D', 'S', 'D', 'W')
+      allow(Kernel).to receive(:rand).and_return(200)
 
-        stub_const('Room::ROOM_PREFIX_MODIFIERS', ['old'])
-        stub_const('Room::ROOM_MODIFIERS', ['medieval'])
-        stub_const('Room::ROOM_LOCATIONS', ['castle'])
-      end
+      stub_const('Room::ROOM_PREFIX_MODIFIERS', ['old'])
+      stub_const('Room::ROOM_MODIFIERS', ['medieval'])
+      stub_const('Room::ROOM_LOCATIONS', ['castle'])
+    end
+
+    context 'when win condition achieved' do
 
       it 'prints game result' do
         expect { game_start }.to output(
@@ -47,6 +48,11 @@ RSpec.describe 'Game' do
             [D] Go East
 
             [X] isn't in the options
+            What do you do?
+            [W] Go North
+            [A] Go West
+            [D] Go East
+            #{Game::HELP_TEXT.chomp}
             What do you do?
             [W] Go North
             [A] Go West
@@ -117,6 +123,16 @@ RSpec.describe 'Game' do
             Congratulations Bank, you have won the game by using Sorcerer
           OUTPUT
         ).to_stdout
+      end
+    end
+
+    context 'when lose condition met' do
+      before do
+        expect(game).to receive(:win?).and_return(false)
+      end
+
+      it 'Game Over' do
+        expect { game_start }.to output(/Game Over/).to_stdout
       end
     end
   end
