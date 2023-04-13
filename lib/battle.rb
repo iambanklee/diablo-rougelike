@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative 'completable'
 require_relative 'character'
+require_relative 'completable'
 
 # Represents an auto battle system of 2 characters
 class Battle

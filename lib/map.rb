@@ -2,6 +2,7 @@
 
 require_relative 'battle'
 require_relative 'character'
+require_relative 'completable'
 require_relative 'room'
 
 # Represents the overview of rooms and responsible for moving around rooms
@@ -54,26 +55,20 @@ class Map
 
   def start(player:)
     until completed?
-      current_room.enter
-
-      final_battle(player: player) if current_room == final_room
+      current_room.start(player: player) { final_room_check }
       break if completed?
 
       loop do
         display_action_menu
-
         action_input = Kernel.gets.chomp
-        next if action_input.empty?
 
         if block_given?
           processed = yield action_input # pass back to game for input checking
           next if processed
         end
 
-        if action_input.match(Regexp.new(action_items.map(&:input).join('|')))
-          action_item = action_items.detect { |item| item.input == action_input }
-          puts action_item.text
-          action_item.execute
+        if valid_action_input?(action_input)
+          process_input(action_input)
           break
         else
           puts
@@ -120,7 +115,8 @@ class Map
   end
 
   def set_final_point
-    @final_room = Room.new(name: 'FINAL')
+    boss = Character.new(name: 'BOSS', character_class: 'Monster', hp: 100, damage: 20)
+    @final_room = Room.new(name: 'FINAL', enemy: boss)
     @rooms[rows - 1][cols - 1] = @final_room
   end
 
@@ -135,11 +131,19 @@ class Map
     (adjacent_x >= 0 && adjacent_x <= rows - 1) && (adjacent_y >= 0 && adjacent_y <= cols - 1)
   end
 
-  def final_battle(player:)
-    boss = Character.new(name: 'BOSS', character_class: 'Monster', hp: 100, damage: 20)
-    battle = Battle.new(player: player, enemy: boss)
-    battle.start
+  def valid_action_input?(input)
+    input.match(Regexp.new(action_items.map(&:input).join('|')))
+  end
 
-    mark_as_completed if battle.completed?
+  def process_input(input)
+    action_item = action_items.detect { |item| item.input == input }
+    return unless action_item
+
+    puts action_item.text
+    action_item.execute
+  end
+
+  def final_room_check
+    mark_as_completed if current_room == final_room
   end
 end

@@ -20,13 +20,12 @@ RSpec.describe 'Game' do
         stub_const('Room::ROOM_LOCATIONS', ['castle'])
       end
 
-      # rubocop:disable Layout/TrailingWhitespace
       it 'prints game result' do
         expect { game_start }.to output(
           <<~OUTPUT
 
             ========== Diablo Rougelike ==========
-            
+
             Greetings adventurer, what's your name?
 
             Bank, what class do you want to play this time?
@@ -119,7 +118,6 @@ RSpec.describe 'Game' do
           OUTPUT
         ).to_stdout
       end
-      # rubocop:enable Layout/TrailingWhitespace
     end
   end
 end

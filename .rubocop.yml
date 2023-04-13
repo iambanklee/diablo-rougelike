@@ -4,6 +4,14 @@ AllCops:
     - 'Guardfile'
     - 'spec/spec_helper.rb'
 
+Metrics/ClassLength:
+  CountAsOne: [array, hash]
+
+Metrics/MethodLength:
+  Max: 20
+  IgnoredMethods: [puts]
+  CountAsOne: [array, hash]
+
 Metrics/BlockLength:
   Exclude:
     - 'spec/**/*'

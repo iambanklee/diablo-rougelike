@@ -21,9 +21,10 @@ RSpec.describe Room do
     end
   end
 
-  describe '#enter' do
-    subject(:enter_room) { room.enter }
+  describe '#start' do
+    subject(:enter_room) { room.start(player: player) }
 
+    let(:player) { Character.new(name: 'Player', character_class: 'Barbarian', hp: 200, damage: 100) }
     let(:room) { Room.new(name: name, event_rate: event_rate) }
     let(:name) { 'Room A' }
 
