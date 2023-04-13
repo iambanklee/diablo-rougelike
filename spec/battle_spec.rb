@@ -16,6 +16,9 @@ RSpec.describe 'Battle' do
     context 'when player wins the battle' do
       it 'returns the battle result' do
         expect { battle_start }.to output(<<~OUTPUT
+          
+          You have encountered an enemy: BOSS
+          Battle started!
           Player attacked BOSS, caused 30 damages
           BOSS HP: 20
           BOSS attacked Player, caused 25 damages
@@ -35,6 +38,9 @@ RSpec.describe 'Battle' do
       let(:boss) { Character.new(name: 'BOSS', hp: 500, damage: 50) }
       it 'returns the battle result' do
         expect { battle_start }.to output(<<~OUTPUT
+
+          You have encountered an enemy: BOSS
+          Battle started!
           Player attacked BOSS, caused 30 damages
           BOSS HP: 470
           BOSS attacked Player, caused 50 damages

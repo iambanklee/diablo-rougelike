@@ -87,6 +87,9 @@ RSpec.describe 'Game' do
           you are going W
           You entered the room 2-2.
           You are in a room look like old medieval castle
+
+          You have encountered an enemy: BOSS
+          Battle started!
           Bank attacked BOSS, caused 50 damages
           BOSS HP: 50
           BOSS attacked Bank, caused 20 damages

@@ -15,16 +15,21 @@ class Battle
   end
 
   def start
-    until completed?
-      player.attack(enemy)
-      if enemy.hp <= 0
-        @winner = player
-        break
-      end
+    puts
+    puts "You have encountered an enemy: #{enemy.name}"
+    puts 'Battle started!'
 
-      enemy.attack(player)
-      if player.hp <= 0
-        @winner = enemy
+    attack_sequence = [player, enemy]
+
+    until completed?
+      attacker = attack_sequence.shift
+      receiver = attack_sequence.shift
+      attack_sequence << receiver
+      attack_sequence << attacker
+
+      attacker.attack(receiver)
+      if receiver.hp <= 0
+        @winner = attacker
         break
       end
     end
@@ -36,6 +41,6 @@ class Battle
   private
 
   def result
-    puts "#{@winner.name} has won the battle with #{@winner.hp} HP left"
+    puts "#{winner.name} has won the battle with #{winner.hp} HP left"
   end
 end
