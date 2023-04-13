@@ -20,13 +20,103 @@ RSpec.describe Map do
   end
 
   describe '#start' do
-    subject(:enter) { map.start }
+    subject(:map_start) { map.start(player: player) }
     let(:map) { described_class.new(rows: 3, cols: 3) }
+    let(:player) { Character.new(name: 'Player', character_class: 'Barbarian', hp: 200, damage: 100) }
 
-    it 'goes to first room' do
-      subject
+    before do
+      allow(Kernel).to receive(:gets).and_return('D', 'X', 'W', 'A', 'W', 'D', 'S', 'D', 'W')
+      allow(Kernel).to receive(:rand).and_return(200)
 
-      expect(map.rooms[0][0]).to eq(map.current_room)
+      stub_const('Room::ROOM_PREFIX_MODIFIERS', ['old'])
+      stub_const('Room::ROOM_MODIFIERS', ['medieval'])
+      stub_const('Room::ROOM_LOCATIONS', ['castle'])
+    end
+
+    it 'goes through all rooms in the map' do
+      expect { map_start }.to output(
+        <<~OUTPUT
+
+          You entered the room 0-0.
+          You are in a room look like old medieval castle
+          What do you do?
+          [W] Go North
+          [D] Go East
+          Go East
+
+          You entered the room 1-0.
+          You are in a room look like old medieval castle
+          What do you do?
+          [W] Go North
+          [A] Go West
+          [D] Go East
+
+          [X] isn't in the options
+          What do you do?
+          [W] Go North
+          [A] Go West
+          [D] Go East
+          Go North
+
+          You entered the room 1-1.
+          You are in a room look like old medieval castle
+          What do you do?
+          [W] Go North
+          [A] Go West
+          [D] Go East
+          [S] Go South
+          Go West
+
+          You entered the room 0-1.
+          You are in a room look like old medieval castle
+          What do you do?
+          [W] Go North
+          [D] Go East
+          [S] Go South
+          Go North
+
+          You entered the room 0-2.
+          You are in a room look like old medieval castle
+          What do you do?
+          [D] Go East
+          [S] Go South
+          Go East
+
+          You entered the room 1-2.
+          You are in a room look like old medieval castle
+          What do you do?
+          [A] Go West
+          [D] Go East
+          [S] Go South
+          Go South
+
+          You entered the room 1-1.
+          You are in a room look like old medieval castle
+          What do you do?
+          [W] Go North
+          [A] Go West
+          [D] Go East
+          [S] Go South
+          Go East
+
+          You entered the room 2-1.
+          You are in a room look like old medieval castle
+          What do you do?
+          [W] Go North
+          [A] Go West
+          [S] Go South
+          Go North
+
+          You entered the room FINAL.
+          You are in a room look like old medieval castle
+
+          You have encountered an enemy: BOSS
+          Battle started!
+          Player attacked BOSS, caused 100 damages
+          BOSS HP: 0
+          Player has won the battle with 200 HP left
+        OUTPUT
+      ).to_stdout
     end
   end
 
@@ -44,7 +134,7 @@ RSpec.describe Map do
     let(:map) { described_class.new(rows: 3, cols: 3) }
 
     it 'returns actionable item of current room' do
-      expect(action_items.map(&:key)).to match_array(%w[W D])
+      expect(action_items.map(&:input)).to match_array(%w[W D])
     end
   end
 

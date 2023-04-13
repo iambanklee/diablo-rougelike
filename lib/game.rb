@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_relative 'battle'
-require_relative 'character'
 require_relative 'map'
 
 # The main entry point of game. Controls game flow and player inputs
@@ -30,6 +28,22 @@ class Game
     @map = Map.new(rows: 3, cols: 3)
   end
 
+  def start
+    prepare_player
+
+    map.start(player: player) { |action_input| process_input(action_input) }
+
+    display_game_result
+  end
+
+  private
+
+  def print_title
+    puts
+    puts '========== Diablo Rougelike =========='
+    puts
+  end
+
   def prepare_player
     print_title
     player_name = player_name_input
@@ -46,56 +60,6 @@ class Game
                             damage: CLASS_LIST[player_class][:damage])
   end
 
-  def start
-    prepare_player
-
-    until map.completed?
-      room = map.current_room
-      room.enter
-
-      if room == map.final_room
-        boss = Character.new(name: 'BOSS', character_class: 'Monster', hp: 100, damage: 20)
-        battle = Battle.new(player: player, enemy: boss)
-        battle.start
-
-        if battle.completed? && room.completed?
-          map.mark_as_completed
-          next
-        end
-      end
-
-      action_input = ''
-      loop do
-        puts 'What do you do?'
-        map.display_action_menu
-        action_input = Kernel.gets.chomp
-        if action_input.match(Regexp.new(map.action_items.map(&:key).join('|')))
-          break
-        else
-          puts
-          puts "[#{action_input}] isn't in the options"
-        end
-      end
-
-      puts "you are going #{action_input}"
-      map.action_items.detect { |item| item.key == action_input }.execute(map)
-    end
-
-    if battle.winner == player
-      puts "Congratulations #{player.name}, you have won the game by using #{player.character_class}"
-    else
-      puts 'Game Over'
-    end
-  end
-
-  private
-
-  def print_title
-    puts
-    puts '========== Diablo Rougelike =========='
-    puts
-  end
-
   def player_name_input
     puts "Greetings adventurer, what's your name?"
     Kernel.gets.chomp
@@ -110,5 +74,28 @@ class Game
     end
 
     player_class
+  end
+
+  def process_input(input)
+    processed = false
+
+    if input.match(/help/i)
+      display_help_menu
+      processed = true
+    end
+
+    processed
+  end
+
+  def display_help_menu
+    puts 'Help menu'
+  end
+
+  def display_game_result
+    if player.hp.positive?
+      puts "Congratulations #{player.name}, you have won the game by using #{player.character_class}"
+    else
+      puts 'Game Over'
+    end
   end
 end

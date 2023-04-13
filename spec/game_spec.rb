@@ -38,7 +38,7 @@ RSpec.describe 'Game' do
             What do you do?
             [W] Go North
             [D] Go East
-            you are going D
+            Go East
 
             You entered the room 1-0.
             You are in a room look like old medieval castle
@@ -52,7 +52,7 @@ RSpec.describe 'Game' do
             [W] Go North
             [A] Go West
             [D] Go East
-            you are going W
+            Go North
 
             You entered the room 1-1.
             You are in a room look like old medieval castle
@@ -61,7 +61,7 @@ RSpec.describe 'Game' do
             [A] Go West
             [D] Go East
             [S] Go South
-            you are going A
+            Go West
 
             You entered the room 0-1.
             You are in a room look like old medieval castle
@@ -69,14 +69,14 @@ RSpec.describe 'Game' do
             [W] Go North
             [D] Go East
             [S] Go South
-            you are going W
+            Go North
 
             You entered the room 0-2.
             You are in a room look like old medieval castle
             What do you do?
             [D] Go East
             [S] Go South
-            you are going D
+            Go East
 
             You entered the room 1-2.
             You are in a room look like old medieval castle
@@ -84,7 +84,7 @@ RSpec.describe 'Game' do
             [A] Go West
             [D] Go East
             [S] Go South
-            you are going S
+            Go South
 
             You entered the room 1-1.
             You are in a room look like old medieval castle
@@ -93,7 +93,7 @@ RSpec.describe 'Game' do
             [A] Go West
             [D] Go East
             [S] Go South
-            you are going D
+            Go East
 
             You entered the room 2-1.
             You are in a room look like old medieval castle
@@ -101,7 +101,7 @@ RSpec.describe 'Game' do
             [W] Go North
             [A] Go West
             [S] Go South
-            you are going W
+            Go North
 
             You entered the room FINAL.
             You are in a room look like old medieval castle
