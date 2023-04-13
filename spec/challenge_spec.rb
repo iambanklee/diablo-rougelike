@@ -43,5 +43,23 @@ RSpec.describe Challenge do
         expect(challenge.completed?).to eq(true)
       end
     end
+
+    context 'when challenge skipped' do
+      before do
+        stub_const('Challenge::CHALLENGE_OPERATORS', ['+'])
+        allow(Random).to receive(:rand).and_return(5, 15)
+        allow(Kernel).to receive(:gets).and_return('5 + 15')
+      end
+
+      it 'marks the challenge completed' do
+        expect{ challenge_start }.to output(<<~OUTPUT
+          You need to solve this challenge before you can go anywhere
+          5 + 15
+          Challenge completed!
+          OUTPUT
+        ).to_stdout
+        expect(challenge.completed?).to eq(true)
+      end
+    end
   end
 end

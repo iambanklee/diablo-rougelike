@@ -21,10 +21,17 @@ class Challenge
       puts formula
       input = Kernel.gets.chomp
 
-      if input == expected_result.to_s
+      if correct_answer?(input)
         mark_as_completed
         puts 'Challenge completed!'
       end
     end
+  end
+
+  private
+
+  def correct_answer?(input)
+    return true if input == formula # for cheating purpose on complex calculations lol
+    input == expected_result.to_s
   end
 end
