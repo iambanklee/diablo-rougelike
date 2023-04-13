@@ -26,6 +26,7 @@ RSpec.describe 'Battle' do
         OUTPUT
         ).to_stdout
 
+        expect(battle.winner).to eq(player)
         expect(battle.completed?).to eq(true)
       end
     end
@@ -46,6 +47,7 @@ RSpec.describe 'Battle' do
         OUTPUT
         ).to_stdout
 
+        expect(battle.winner).to eq(boss)
         expect(battle.completed?).to eq(true)
       end
     end

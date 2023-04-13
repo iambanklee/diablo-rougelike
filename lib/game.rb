@@ -1,6 +1,8 @@
 # frozen_string_literal: true
-require_relative 'map'
+
+require_relative 'battle'
 require_relative 'character'
+require_relative 'map'
 
 class Game
   attr_reader :map, :player
@@ -20,6 +22,8 @@ class Game
     },
   }.freeze
 
+  CLASS_OPTIONS = CLASS_LIST.keys.freeze
+
   def initialize
     @map = Map.new(rows: 3, cols: 3)
   end
@@ -35,7 +39,7 @@ class Game
     player_class = ''
 
     until CLASS_LIST[player_class]
-      puts "There are #{CLASS_LIST.keys.size} classes you can choose from: #{CLASS_LIST.keys.join(', ')}"
+      puts "There are #{CLASS_OPTIONS.size} classes you can choose from: #{CLASS_OPTIONS.join(', ')}"
       player_class = Kernel.gets.chomp
     end
 
@@ -45,15 +49,19 @@ class Game
                             hp: CLASS_LIST[player_class][:hp],
                             damage: CLASS_LIST[player_class][:damage])
 
-    room = @map.start
-
     until map.completed?
+      room = map.current_room
       room.enter
 
-      if room == @map.final_room
-        # TODO: final boss
-        map.mark_as_completed
-        next
+      if room == map.final_room
+        boss = Character.new(name: 'BOSS', hp: 100, damage: 20)
+        battle = Battle.new(player: player, enemy: boss)
+        battle.start
+
+        if battle.completed? && room.completed?
+          map.mark_as_completed
+          next
+        end
       end
 
       begin
@@ -64,10 +72,12 @@ class Game
 
       puts "you are going #{move_direction}"
       map.action_items.detect { |item| item.key == move_direction }.execute(map)
-
-      room = @map.current_room
     end
 
-    puts 'Game over'
+    if battle.winner == player
+      puts "Congratulations #{player.name}, you have won the game by using #{player_class}"
+    else
+      puts "Game Over"
+    end
   end
 end

@@ -6,7 +6,7 @@ require_relative 'character'
 class Battle
   include Completable
 
-  attr_reader :player, :enemy
+  attr_reader :player, :enemy, :winner
 
   def initialize(player:, enemy:)
     @player = player

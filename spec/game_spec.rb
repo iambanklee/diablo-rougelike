@@ -87,7 +87,14 @@ RSpec.describe 'Game' do
           you are going W
           You entered the room 2-2.
           You are in a room look like old medieval castle
-          Game over
+          Bank attacked BOSS, caused 50 damages
+          BOSS HP: 50
+          BOSS attacked Bank, caused 20 damages
+          Bank HP: 80
+          Bank attacked BOSS, caused 50 damages
+          BOSS HP: 0
+          Bank has won the battle with 80 HP left
+          Congratulations Bank, you have won the game by using Sorcerer
         OUTPUT
         ).to_stdout
       end
