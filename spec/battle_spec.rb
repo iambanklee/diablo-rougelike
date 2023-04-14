@@ -9,7 +9,7 @@ RSpec.describe 'Battle' do
   describe '#start' do
     subject(:battle_start) { battle.start }
 
-    let(:battle) { Battle.new(player: player, enemy: boss) }
+    let(:battle) { Battle.new(player:, enemy: boss) }
     let(:player) { Character.new(name: 'Player', character_class: 'Rouge', hp: 100, damage: 30) }
     let(:boss) { Character.new(name: 'BOSS', character_class: 'Monster', hp: 50, damage: 25) }
 

@@ -20,7 +20,6 @@ RSpec.describe 'Game' do
     end
 
     context 'when win condition achieved' do
-
       it 'prints game result' do
         expect { game_start }.to output(
           <<~OUTPUT

@@ -9,7 +9,7 @@ Metrics/ClassLength:
 
 Metrics/MethodLength:
   Max: 20
-  IgnoredMethods: [puts]
+  AllowedMethods: [puts]
   CountAsOne: [array, hash]
 
 Metrics/BlockLength:

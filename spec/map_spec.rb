@@ -20,7 +20,7 @@ RSpec.describe Map do
   end
 
   describe '#start' do
-    subject(:map_start) { map.start(player: player) }
+    subject(:map_start) { map.start(player:) }
     let(:map) { described_class.new(rows: 3, cols: 3) }
     let(:player) { Character.new(name: 'Player', character_class: 'Barbarian', hp: 200, damage: 100) }
 
@@ -148,7 +148,7 @@ RSpec.describe Map do
   end
 
   describe '#go_direction' do
-    subject(:go_north) { map.go_direction(direction: direction) }
+    subject(:go_north) { map.go_direction(direction:) }
     let(:map) { described_class.new(rows: 3, cols: 3) }
 
     context 'when direction is North' do

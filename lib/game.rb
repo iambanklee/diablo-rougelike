@@ -22,25 +22,25 @@ class Game
   }.freeze
 
   CLASS_OPTIONS = CLASS_LIST.keys.freeze
-  CLASS_OPTIONS_TEXT = "#{CLASS_OPTIONS.first(CLASS_OPTIONS.size - 1).join(', ')} and #{CLASS_OPTIONS.last}"
+  CLASS_OPTIONS_TEXT = "#{CLASS_OPTIONS.first(CLASS_OPTIONS.size - 1).join(', ')} and #{CLASS_OPTIONS.last}".freeze
 
-  HELP_TEXT = <<~HELP
+  HELP_TEXT = <<~HELP.freeze
     ==========================================================================================
     Movement:
       - Use [W, A, S ,D] (case sensitive) to move around the rooms
-      
+    #{'  '}
     How to win the game:
       - You need to go to the final room and fight the boss
 
     Game Over:
       - If your character HP <= 0
-   
+
     Random challenges:
       - You might get some easy math challenges while you enter the room
       - There is no challenges in final room
       - If you having troubles in calculating, there are tips:
         - Use calculator
-        - Use cheat code by entering exact wording of challenge (on your own risk) 
+        - Use cheat code by entering exact wording of challenge (on your own risk)#{' '}
           - Example: '5 + 10'
     ==========================================================================================
   HELP
@@ -52,7 +52,7 @@ class Game
   def start
     prepare_player
 
-    map.start(player: player) { |action_input| process_input(action_input) }
+    map.start(player:) { |action_input| process_input(action_input) }
 
     display_game_result
   end

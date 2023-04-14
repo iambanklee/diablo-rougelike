@@ -55,12 +55,13 @@ class Map
 
   def start(player:)
     until completed?
-      current_room.start(player: player) { final_room_check }
+      current_room.start(player:) { final_room_check }
       break if completed?
 
       loop do
         display_action_menu
         action_input = Kernel.gets.chomp
+        next if action_input == "\e" # ESC key
 
         if block_given?
           processed = yield action_input # pass back to game for input checking
@@ -71,8 +72,7 @@ class Map
           process_input(action_input)
           break
         else
-          puts
-          puts "[#{action_input}] isn't in the options"
+          puts "\n[#{action_input}] isn't in the options"
         end
       end
     end
@@ -90,16 +90,16 @@ class Map
   def action_items
     available_directions.map do |direction|
       item = DIRECTION_MAPPING[direction]
-      ActionItem.new(item[:input], item[:text], -> { go_direction(direction: direction) })
+      ActionItem.new(item[:input], item[:text], -> { go_direction(direction:) })
     end
   end
 
   def available_directions
-    DIRECTIONS.select { |direction| valid_direction?(direction: direction) }
+    DIRECTIONS.select { |direction| valid_direction?(direction:) }
   end
 
   def go_direction(direction:)
-    return unless valid_direction?(direction: direction)
+    return unless valid_direction?(direction:)
 
     @current_x += direction.first
     @current_y += direction.last

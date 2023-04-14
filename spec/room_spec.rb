@@ -5,7 +5,7 @@ require 'room'
 
 RSpec.describe Room do
   describe '.new' do
-    subject(:new_room) { Room.new(name: name, event_rate: event_rate) }
+    subject(:new_room) { Room.new(name:, event_rate:) }
 
     let(:name) { 'Room A' }
     let(:event_rate) { -1 }
@@ -22,10 +22,10 @@ RSpec.describe Room do
   end
 
   describe '#start' do
-    subject(:enter_room) { room.start(player: player) }
+    subject(:enter_room) { room.start(player:) }
 
     let(:player) { Character.new(name: 'Player', character_class: 'Barbarian', hp: 200, damage: 100) }
-    let(:room) { Room.new(name: name, event_rate: event_rate) }
+    let(:room) { Room.new(name:, event_rate:) }
     let(:name) { 'Room A' }
 
     context 'when there is no event in the room' do

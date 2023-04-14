@@ -29,7 +29,7 @@ class Room
     puts description
 
     until completed?
-      start_battle(player: player) if enemy
+      start_battle(player:) if enemy
       is_final_room = yield if block_given?
 
       event&.start unless is_final_room
@@ -60,7 +60,7 @@ class Room
   end
 
   def start_battle(player:)
-    battle = Battle.new(player: player, enemy: enemy)
+    battle = Battle.new(player:, enemy:)
     battle.start
   end
 end
