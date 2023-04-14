@@ -243,7 +243,7 @@ A bit mix of DDD/BDD/TDD approaches as the requirements seems clear but include 
 3. Upgraded ruby and bundler, cleaning up and better formatting
 4. Manual testing, fixed few bugs (you might know what these are, or not)
 
-## 5. Potential improvements: mix of both product and coding point of view (in no specific order)
+### 5. Potential improvements: mix of both product and coding point of view (in no specific order)
 1. STDOUT and logging - lot of `puts` in the code, which can be extracted or replaced by something better
 2. Dynamic key binding - use arrow keys to move around without press enter key
 3. Random final room location and random final boss HP and damage
